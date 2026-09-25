@@ -1,0 +1,103 @@
+schema: '2.0'
+stages:
+  data_ingestion:
+    cmd: python .\src\data_ingestion_preprocessing.py
+    deps:
+    - path: .\data\diabetes.csv
+      hash: md5
+      md5: 2fef5f3fd179b50c71a85a8f6b7d6e93
+      size: 23875
+    - path: .\src\data_ingestion_preprocessing.py
+      hash: md5
+      md5: 27f22e68d8994acf8e41db788d2c2270
+      size: 3094
+    params:
+      params.yaml:
+        data_ingestion.n_neighbors: 10
+    outs:
+    - path: data\preprocessed
+      hash: md5
+      md5: 5b84519aa8b8b43a00a1a5c346972cfd.dir
+      size: 30912
+      nfiles: 1
+  feature_engineering:
+    cmd: python .\src\feature_engineering.py
+    deps:
+    - path: .\data\preprocessed\preprocessed_data.csv
+      hash: md5
+      md5: a006d6f820bc0b1d9856862ab106a843
+      size: 30912
+    - path: .\src\feature_engineering.py
+      hash: md5
+      md5: acddf003ad85f53d9aca870a9e61c33d
+      size: 4222
+    outs:
+    - path: data\feature_engineering
+      hash: md5
+      md5: 6320412c4e11d6bb06b0e306134a95ff.dir
+      size: 107616
+      nfiles: 1
+  model_building:
+    cmd: python .\src\model_building.py
+    deps:
+    - path: .\data\feature_engineering\feature_engineering_data.csv
+      hash: md5
+      md5: f557ce54d8b9c6b768ff8536cc61caa7
+      size: 107616
+    - path: .\src\model_building.py
+      hash: md5
+      md5: fc71663fef40e2f2cccd15c2563a8c82
+      size: 3811
+    params:
+      params.yaml:
+        model_building.lgbm.learning_rate: 0.01
+        model_building.lgbm.max_depth: 3
+        model_building.lgbm.n_estimators: 1000
+        model_building.lgbm.random_state: 42
+        model_building.random_forest.max_depth: 8
+        model_building.random_forest.max_features: 7
+        model_building.random_forest.min_samples_split: 2
+        model_building.random_forest.n_estimators: 500
+        model_building.random_forest.random_state: 42
+        model_building.train_test_split.random_state: 42
+        model_building.train_test_split.test_size: 0.2
+        model_building.xgb.learning_rate: 0.1
+        model_building.xgb.max_depth: 5
+        model_building.xgb.min_samples_split: 2
+        model_building.xgb.n_estimators: 100
+        model_building.xgb.random_state: 42
+    outs:
+    - path: models
+      hash: md5
+      md5: 350f72a378936b20412e9a6ba8f4744c.dir
+      size: 5415973
+      nfiles: 3
+  model_evaluation:
+    cmd: python .\src\model_evaluation.py
+    deps:
+    - path: .\data\testing_data\X_test.csv
+      hash: md5
+      md5: a7c3b23210cf0139b1b6eeadc8e35e75
+      size: 20990
+    - path: .\data\testing_data\X_train.csv
+      hash: md5
+      md5: a99f3f68dc561df80f22affde3aff0f3
+      size: 83577
+    - path: .\data\testing_data\y_test.csv
+      hash: md5
+      md5: b8fed2b8569305530d4c3fecb9b68cb6
+      size: 465
+    - path: .\data\testing_data\y_train.csv
+      hash: md5
+      md5: 0e4e34444da143e048795312112e22c3
+      size: 1833
+    - path: .\src\model_evaluation.py
+      hash: md5
+      md5: fb9f8b52442c839160819992f69b9150
+      size: 2982
+    outs:
+    - path: results\
+      hash: md5
+      md5: 6c2b4833306f59cb91689921b959394c.dir
+      size: 348
+      nfiles: 1
