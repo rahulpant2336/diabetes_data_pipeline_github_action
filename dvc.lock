@@ -51,7 +51,7 @@ stages:
     params:
       params.yaml:
         model_building.lgbm.learning_rate: 0.01
-        model_building.lgbm.max_depth: 3
+        model_building.lgbm.max_depth: 4
         model_building.lgbm.n_estimators: 1000
         model_building.lgbm.random_state: 42
         model_building.random_forest.max_depth: 8
@@ -69,8 +69,8 @@ stages:
     outs:
     - path: models
       hash: md5
-      md5: 350f72a378936b20412e9a6ba8f4744c.dir
-      size: 5415973
+      md5: 314ff992b53cb552aef1ff461d3ed604.dir
+      size: 5797909
       nfiles: 3
   model_evaluation:
     cmd: python .\src\model_evaluation.py
