@@ -66,7 +66,7 @@ print(f"Model testing data saved! Saved data to: {testing_dir}")
 models_dir = base_dir / "models"
 models_dir.mkdir(parents=True, exist_ok=True)
 
-# === NEW: Save scaler and feature columns ===
+# === Save scaler and feature columns ===
 numeric_cols = ["Pregnancies","Glucose","BloodPressure","SkinThickness","Insulin","BMI","DiabetesPedigreeFunction","Age"]
 scaler = RobustScaler().fit(X_train[numeric_cols])
 joblib.dump(scaler, models_dir / "scaler.pkl")
@@ -108,7 +108,7 @@ models = {
 
 # configure MLflow tracking URI (SQLite Database) and experiment
 mlflow_db_path = base_dir / "mlflow.db"
-mlflow.set_tracking_uri(f"sqlite:///{mlflow_db_path.as_posix()}")
+mlflow.set_tracking_uri(f"sqlite:///{mlflow_db_path.resolve().as_posix()}")
 mlflow.set_experiment("Diabetes Predictions")
 
 metrics_summary = []
@@ -140,15 +140,10 @@ for model_name, (model, model_hparams) in models.items():
         with open(model_filepath, "wb") as f:
             joblib.dump(model, f)
 
-        # Log artifacts
-        # mlflow.log_artifact(str(model_filepath.as_posix()), artifact_path="pkl_artifacts")
-        # mlflow.log_artifact(str(models_dir / "scaler.pkl"), artifact_path="scaler")
-        # mlflow.log_artifact(str(models_dir / "feature_cols.pkl"), artifact_path="features")
-
-        mlflow.log_artifact(model_filepath.as_posix(), artifact_path="pkl_artifacts")
-        mlflow.log_artifact((models_dir / "scaler.pkl").as_posix(), artifact_path="scaler")
-        mlflow.log_artifact((models_dir / "feature_cols.pkl").as_posix(), artifact_path="features")
-
+        # Log artifacts (portable paths)
+        mlflow.log_artifact(model_filepath.resolve().as_posix(), artifact_path="pkl_artifacts")
+        mlflow.log_artifact((models_dir / "scaler.pkl").resolve().as_posix(), artifact_path="scaler")
+        mlflow.log_artifact((models_dir / "feature_cols.pkl").resolve().as_posix(), artifact_path="features")
 
         # Flavor-based logging
         if "Light GBM" in model_name:
