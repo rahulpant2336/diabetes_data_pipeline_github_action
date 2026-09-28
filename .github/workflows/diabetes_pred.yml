@@ -1,0 +1,52 @@
+name: Diabetes Prediction CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  model-metrics:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout repo
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Set up Python
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      # Install dependencies
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      # Run model evaluation script
+      - name: Run model evaluation
+        run: |
+          python src/model_evaluation.py > metrics.log
+
+      # Upload results JSON + models as artifacts
+      - name: Upload evaluation results
+        uses: actions/upload-artifact@v4
+        with:
+          name: evaluation-results
+          path: |
+            results/model_results.json
+            models/*.pkl
+
+      # Display only metrics summary in logs
+      - name: Show model metrics
+        run: |
+          echo "=== Model Metrics Summary ==="
+          grep "mean_accuracy" metrics.log || true
+          grep "std_accuracy" metrics.log || true
+          grep "Final test accuracy" metrics.log || true

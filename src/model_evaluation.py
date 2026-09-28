@@ -36,15 +36,15 @@ with open(params_path, "r", encoding="utf-8") as f:
     params = yaml.safe_load(f)["model_evaluation"]
 
 # Load the xgb model
-with open(base_dir / "models/xgb_model.pkl", "rb") as f:
+with open(base_dir / "models/xgboost.pkl", "rb") as f:
     xgb_loaded_model = joblib.load(f)
 
 # Load the lgbm model
-with open(base_dir / "models/lgbm_model.pkl", "rb") as f:
+with open(base_dir / "models/light_gbm.pkl", "rb") as f:
     lgbm_loaded_model = joblib.load(f)
 
 # Load the rf model
-with open(base_dir / "models/rf_model.pkl", "rb") as f:
+with open(base_dir / "models/random_forest.pkl", "rb") as f:
     rf_loaded_model = joblib.load(f)
 
 models = []

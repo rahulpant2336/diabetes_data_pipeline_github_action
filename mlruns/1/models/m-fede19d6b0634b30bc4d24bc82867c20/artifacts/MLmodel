@@ -1,0 +1,22 @@
+artifact_path: file:///C:/Users/rahul/OneDrive/Desktop/data_pipeline/mlruns/1/models/m-fede19d6b0634b30bc4d24bc82867c20/artifacts
+flavors:
+  python_function:
+    data: model.ubj
+    env:
+      conda: conda.yaml
+      virtualenv: python_env.yaml
+    loader_module: mlflow.xgboost
+    python_version: 3.11.0
+  xgboost:
+    code: null
+    data: model.ubj
+    model_class: xgboost.sklearn.XGBClassifier
+    model_format: ubj
+    xgb_version: 3.2.0
+mlflow_version: 3.16.1
+model_id: m-fede19d6b0634b30bc4d24bc82867c20
+model_size_bytes: 167611
+model_uuid: m-fede19d6b0634b30bc4d24bc82867c20
+prompts: null
+run_id: c9da25fa03784518a83cd448681afb66
+utc_time_created: '2026-09-27 06:58:58.037371'

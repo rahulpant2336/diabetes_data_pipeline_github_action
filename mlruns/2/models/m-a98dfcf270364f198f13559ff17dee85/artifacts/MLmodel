@@ -1,0 +1,27 @@
+artifact_path: file:///C:/Users/rahul/OneDrive/Desktop/data_pipeline/mlruns/2/models/m-a98dfcf270364f198f13559ff17dee85/artifacts
+flavors:
+  lightgbm:
+    code: null
+    data: model.skops
+    lgb_version: 4.7.0
+    model_class: lightgbm.sklearn.LGBMClassifier
+    serialization_format: skops
+    skops_trusted_types:
+    - collections.OrderedDict
+    - lightgbm.sklearn.LGBMClassifier
+    - lightgbm.basic.Booster
+    - lightgbm.sklearn.LGBMRegressor
+  python_function:
+    data: model.skops
+    env:
+      conda: conda.yaml
+      virtualenv: python_env.yaml
+    loader_module: mlflow.lightgbm
+    python_version: 3.11.0
+mlflow_version: 3.16.1
+model_id: m-a98dfcf270364f198f13559ff17dee85
+model_size_bytes: 950060
+model_uuid: m-a98dfcf270364f198f13559ff17dee85
+prompts: null
+run_id: 5964c721a1ec4fcba73491b3b63b2064
+utc_time_created: '2026-09-27 07:12:28.332050'

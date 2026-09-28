@@ -34,7 +34,7 @@ stages:
     - model_building.train_test_split.test_size
     - model_building.xgb.learning_rate
     - model_building.xgb.max_depth
-    - model_building.xgb.min_samples_split
+    # - model_building.xgb.min_samples_split
     - model_building.xgb.n_estimators
     - model_building.xgb.random_state
     outs:

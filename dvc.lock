@@ -46,8 +46,8 @@ stages:
       size: 107616
     - path: .\src\model_building.py
       hash: md5
-      md5: fc71663fef40e2f2cccd15c2563a8c82
-      size: 3811
+      md5: 8a50e4443f66f4ef07e175ba2ad3cf59
+      size: 6549
     params:
       params.yaml:
         model_building.lgbm.learning_rate: 0.01
@@ -63,15 +63,14 @@ stages:
         model_building.train_test_split.test_size: 0.2
         model_building.xgb.learning_rate: 0.1
         model_building.xgb.max_depth: 5
-        model_building.xgb.min_samples_split: 2
         model_building.xgb.n_estimators: 100
         model_building.xgb.random_state: 42
     outs:
     - path: models
       hash: md5
-      md5: 350f72a378936b20412e9a6ba8f4744c.dir
-      size: 5415973
-      nfiles: 3
+      md5: da5ec67eef61dea68f27ff255253a1be.dir
+      size: 5175639
+      nfiles: 5
   model_evaluation:
     cmd: python .\src\model_evaluation.py
     deps:
@@ -93,11 +92,11 @@ stages:
       size: 1833
     - path: .\src\model_evaluation.py
       hash: md5
-      md5: fb9f8b52442c839160819992f69b9150
-      size: 2982
+      md5: 8ccc673b7530657537847b8e40e3e316
+      size: 2984
     outs:
     - path: results\
       hash: md5
-      md5: 6c2b4833306f59cb91689921b959394c.dir
+      md5: 1c6071208c86f5b73da3e150e4d27ad4.dir
       size: 348
       nfiles: 1
