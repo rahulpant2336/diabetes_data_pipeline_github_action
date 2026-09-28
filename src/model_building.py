@@ -140,10 +140,10 @@ for model_name, (model, model_hparams) in models.items():
         with open(model_filepath, "wb") as f:
             joblib.dump(model, f)
 
-        # Log artifacts (portable paths)
-        mlflow.log_artifact(model_filepath.resolve().as_posix(), artifact_path="pkl_artifacts")
-        mlflow.log_artifact((models_dir / "scaler.pkl").resolve().as_posix(), artifact_path="scaler")
-        mlflow.log_artifact((models_dir / "feature_cols.pkl").resolve().as_posix(), artifact_path="features")
+        # Log artifacts (no artifact_path to avoid /C: issue)
+        mlflow.log_artifact(model_filepath.resolve().as_posix())
+        mlflow.log_artifact((models_dir / "scaler.pkl").resolve().as_posix())
+        mlflow.log_artifact((models_dir / "feature_cols.pkl").resolve().as_posix())
 
         # Flavor-based logging
         if "Light GBM" in model_name:
