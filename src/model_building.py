@@ -106,9 +106,15 @@ models = {
     )
 }
 
-# configure MLflow tracking URI (SQLite Database) and experiment
+# configure MLflow tracking URI and experiment
 mlflow_db_path = base_dir / "mlflow.db"
 mlflow.set_tracking_uri(f"sqlite:///{mlflow_db_path.resolve().as_posix()}")
+
+# Force artifacts to be stored inside repo (portable path)
+mlruns_dir = base_dir / "mlruns"
+mlruns_dir.mkdir(parents=True, exist_ok=True)
+mlflow.set_tracking_uri("file://" + mlruns_dir.resolve().as_posix())
+
 mlflow.set_experiment("Diabetes Predictions")
 
 metrics_summary = []
@@ -140,7 +146,7 @@ for model_name, (model, model_hparams) in models.items():
         with open(model_filepath, "wb") as f:
             joblib.dump(model, f)
 
-        # Log artifacts (portable paths, no artifact_path to avoid /C: issue)
+        # Log artifacts (portable paths)
         mlflow.log_artifact(model_filepath.resolve().as_posix())
         mlflow.log_artifact((models_dir / "scaler.pkl").resolve().as_posix())
         mlflow.log_artifact((models_dir / "feature_cols.pkl").resolve().as_posix())
