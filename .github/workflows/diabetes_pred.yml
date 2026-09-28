@@ -29,24 +29,23 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      # Run model evaluation script
-      - name: Run model evaluation
+      # Run model building script
+      - name: Run model building
         run: |
-          python src/model_evaluation.py > metrics.log
+          python src/model_building.py > metrics.log
 
-      # Upload results JSON + models as artifacts
-      - name: Upload evaluation results
+      # Upload results + models as artifacts
+      - name: Upload trained models and results
         uses: actions/upload-artifact@v4
         with:
-          name: evaluation-results
+          name: model-building-results
           path: |
-            results/model_results.json
+            results/*.json
             models/*.pkl
 
       # Display only metrics summary in logs
       - name: Show model metrics
         run: |
           echo "=== Model Metrics Summary ==="
-          grep "mean_accuracy" metrics.log || true
-          grep "std_accuracy" metrics.log || true
-          grep "Final test accuracy" metrics.log || true
+          grep "Cross val score" metrics.log || true
+          grep "Final Model Comparison Summary" -A 10 metrics.log || true
