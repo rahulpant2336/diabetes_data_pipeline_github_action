@@ -6,7 +6,7 @@ import yaml
 
 #determine project base directory using pathlib
 base_dir = Path(__file__).resolve().parent.parent
-print(base_dir)
+print(base_dir) 
 
 sample_data_path = base_dir / "data" / "diabetes.csv"
 params_path = base_dir / "params.yaml"
